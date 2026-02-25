@@ -23,7 +23,9 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
-  uploadCloud(["image/png", "image/jpeg", "image/jpg", "image/svg"]).single("image"),
+  uploadCloud(["image/png", "image/jpeg", "image/jpg", "image/svg"]).single(
+    "avatar",
+  ),
   validation(heroesScheme.createHeroSchema),
   asyncHandler(heroesService.createHero),
 );

@@ -29,20 +29,20 @@ export const getHeroById = async (req, res, next) => {
 
 // Create a new hero
 export const createHero = async (req, res, next) => {
-  const payload = { ...req.body };
+  // Use destructuring to extract specific fields safely
+  const { id, total_quests, completed_quests, ...restBody } = req.body;
+  const payload = { ...restBody };
 
   payload.user = req.user._id;
 
-  if (payload.id) {
-    if (payload.id.length === 24) {
-      payload._id = payload.id;
+  if (id) {
+    if (id.length === 24) {
+      payload._id = id;
     }
-    delete payload.id;
   }
-  if (payload.total_quests !== undefined)
-    payload.totalQuests = payload.total_quests;
-  if (payload.completed_quests !== undefined)
-    payload.completedQuests = payload.completed_quests;
+  if (total_quests !== undefined) payload.totalQuests = total_quests;
+  if (completed_quests !== undefined)
+    payload.completedQuests = completed_quests;
 
   if (req.file) {
     const { secure_url } = await cloudinary.uploader.upload(req.file.path, {
@@ -64,15 +64,22 @@ export const createHero = async (req, res, next) => {
 
 // Update hero
 export const updateHero = async (req, res, next) => {
-  const { id } = req.params;
-  const updates = req.body;
+  const { id: heroId } = req.params;
 
-  // Don't allow changing the id or user reference
-  delete updates.id;
-  delete updates.user;
+  // Use destructuring to ignore id, user, avatar, and map total_quests/completed_quests
+  const { id, user, avatar, total_quests, completed_quests, ...updates } =
+    req.body;
+
+  // Map offline-first frontend fields
+  if (total_quests !== undefined) {
+    updates.totalQuests = total_quests;
+  }
+  if (completed_quests !== undefined) {
+    updates.completedQuests = completed_quests;
+  }
 
   const hero = await Hero.findOneAndUpdate(
-    { _id: id, user: req.user._id },
+    { _id: heroId, user: req.user._id },
     { $set: updates },
     { new: true }, // Return the updated document
   );

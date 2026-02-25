@@ -32,14 +32,13 @@ export const updateHeroSchema = joi
     id: joi.string().custom(objectIdValidation).required(),
     name: joi.string().min(2).max(50),
     description: joi.string(),
-    gender: joi.string().valid("male", "female"),
-    avatar: joi.string(),
     level: joi.number().integer().min(1),
     xp: joi.number().min(0),
-    totalQuests: joi.number().integer().min(0),
-    completedQuests: joi.number().integer().min(0),
+    total_quests: joi.number().integer().min(0),
+    completed_quests: joi.number().integer().min(0),
     streak: joi.number().integer().min(0),
   })
+  .unknown(true)
   .required();
 
 export const deleteHeroSchema = joi
