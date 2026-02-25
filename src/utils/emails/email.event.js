@@ -1,7 +1,7 @@
 // Email Events
 import { EventEmitter } from "events";
-import sendEmails from "./sendEmails.js";
 import { verifyEmailTemplate } from './generateHTML.js';
+import sendEmails from "./sendEmails.js";
 
 export const eventEmitter = new EventEmitter();
 

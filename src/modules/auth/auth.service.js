@@ -1,4 +1,5 @@
 import User from "../../DB/models/user.model.js";
+import { eventEmitter } from "../../utils/emails/email.event.js";
 import { hash, compareHash } from "../../utils/hashing/hash.js";
 import { generateToken, verifyToken } from "../../utils/token/token.js";
 import randomstring from "randomstring";
