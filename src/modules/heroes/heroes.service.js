@@ -1,5 +1,6 @@
 import Hero from "../../DB/models/hero.model.js";
 import User from "../../DB/models/user.model.js";
+import cloudinary from "../../utils/file uploading/cloudinary.config.js";
 
 // Get all heroes for the current user
 export const getAllHeroes = async (req, res, next) => {
@@ -8,7 +9,7 @@ export const getAllHeroes = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: "Heroes retrieved successfully",
-    data: heroes,
+    heroes,
   });
 };
 
@@ -22,24 +23,42 @@ export const getHeroById = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: "Hero retrieved successfully",
-    data: hero,
+    hero,
   });
 };
 
 // Create a new hero
 export const createHero = async (req, res, next) => {
-  const { name, avatar } = req.body;
+  const payload = { ...req.body };
 
-  const hero = await Hero.create({
-    user: req.user._id,
-    name,
-    avatar,
-  });
+  payload.user = req.user._id;
+
+  if (payload.id) {
+    if (payload.id.length === 24) {
+      payload._id = payload.id;
+    }
+    delete payload.id;
+  }
+  if (payload.total_quests !== undefined)
+    payload.totalQuests = payload.total_quests;
+  if (payload.completed_quests !== undefined)
+    payload.completedQuests = payload.completed_quests;
+
+  if (req.file) {
+    const { secure_url } = await cloudinary.uploader.upload(req.file.path, {
+      folder: `${process.env.CLOUD_FOLDER_NAME}/users/${req.user._id}/heroes`,
+    });
+    payload.avatar = secure_url;
+  } else if (!payload.avatar) {
+    return next(new Error("Avatar is required"), { cause: 400 });
+  }
+
+  const hero = await Hero.create(payload);
 
   return res.status(201).json({
     success: true,
     message: "Hero created successfully",
-    data: hero,
+    hero,
   });
 };
 
@@ -64,7 +83,7 @@ export const updateHero = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: "Hero updated successfully",
-    data: hero,
+    hero,
   });
 };
 
@@ -96,6 +115,6 @@ export const selectHero = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: `Hero ${hero.name} selected successfully`,
-    data: hero,
+    hero,
   });
 };

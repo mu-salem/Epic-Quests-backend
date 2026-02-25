@@ -13,15 +13,26 @@ export const getHeroSchema = joi
 
 export const createHeroSchema = joi
   .object({
+    id: joi.string(),
     name: joi.string().min(2).max(50).required(),
-    avatar: joi.string().required(),
+    description: joi.string().allow(""),
+    gender: joi.string().valid("male", "female"),
+    avatar: joi.string(),
+    level: joi.number().integer().min(1),
+    xp: joi.number().min(0),
+    total_quests: joi.number().integer().min(0),
+    completed_quests: joi.number().integer().min(0),
+    streak: joi.number().integer().min(0),
   })
+  .unknown(true)
   .required();
 
 export const updateHeroSchema = joi
   .object({
     id: joi.string().custom(objectIdValidation).required(),
     name: joi.string().min(2).max(50),
+    description: joi.string(),
+    gender: joi.string().valid("male", "female"),
     avatar: joi.string(),
     level: joi.number().integer().min(1),
     xp: joi.number().min(0),

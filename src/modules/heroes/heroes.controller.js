@@ -4,6 +4,7 @@ import validation from "../../middleware/validation.middleware.js";
 import isAuthenticated from "../../middleware/authentication.middleware.js";
 import * as heroesScheme from "./heroes.validation.js";
 import * as heroesService from "./heroes.service.js";
+import { uploadCloud } from "../../utils/file uploading/multerCloud.js";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
+  uploadCloud(["image/png", "image/jpeg", "image/jpg", "image/svg"]).single("image"),
   validation(heroesScheme.createHeroSchema),
   asyncHandler(heroesService.createHero),
 );

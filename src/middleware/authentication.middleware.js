@@ -3,17 +3,28 @@ import { asyncHandler } from "../utils/error handling/asynchandler.js";
 import { verifyToken } from "../utils/token/token.js";
 
 const isAuthenticated = asyncHandler(async (req, res, next) => {
-    const { authorization } = req.headers;
-    if (!authorization || !authorization.startsWith("Bearer"))
-        return next(new Error("Valid token is required!"), { cause: 403 });
+  const { authorization } = req.headers;
+  if (!authorization)
+    return next(new Error("Token is required!"), { cause: 403 });
+  if (!authorization.toLowerCase().startsWith("bearer"))
+    return next(new Error("Invalid token format! Use 'Bearer <token>'"), {
+      cause: 403,
+    });
 
-    const Token = authorization.split(" ")[1];
-    const { id } = verifyToken({ token: Token });
+  // Clean up the token (remove "Bearer", spaces, and accidental quotes)
+  let Token = authorization.replace(/^Bearer\s+/i, "").trim();
+  Token = Token.replace(/^"+|"+$/g, "");
 
-    const user = await User.findById(id).select("-password").lean();
-    if (!user) return next(new Error("User not found!"), { cause: 404 });
+  const { id } = verifyToken({ token: Token });
 
-    req.user = user;
-    return next();
+  const user = await User.findById(id).select("-password").lean();
+  if (!user) return next(new Error("User not found!"), { cause: 404 });
+
+  if (!user.isLoggedIn)
+    return next(new Error("try to login again!"), { cause: 401 });
+
+  req.user = user;
+  return next();
 });
+
 export default isAuthenticated;
