@@ -12,8 +12,18 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
     });
 
   // Clean up the token (remove "Bearer", spaces, and accidental quotes)
-  let Token = authorization.replace(/^Bearer\s+/i, "").trim();
+  console.log("=== AUTH DEBUG: ORIGINAL HEADER ===", authorization);
+  let Token = authorization.replace(/^(Bearer\s+)+/i, "").trim();
   Token = Token.replace(/^"+|"+$/g, "");
+  console.log("=== AUTH DEBUG: CLEANED TOKEN ===", Token);
+  console.log(
+    "=== AUTH DEBUG: SECRET LENGTH ===",
+    process.env.JWT_SECRET?.length,
+  );
+  console.log(
+    "=== AUTH DEBUG: SECRET VALUE (FIRST 3 CHARS) ===",
+    process.env.JWT_SECRET?.substring(0, 3),
+  );
 
   let decoded;
   try {
