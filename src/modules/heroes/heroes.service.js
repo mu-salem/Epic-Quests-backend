@@ -1,10 +1,18 @@
 import Hero from "../../DB/models/hero.model.js";
 import User from "../../DB/models/user.model.js";
+import Quest from "../../DB/models/quest.model.js";
 import cloudinary from "../../utils/file uploading/cloudinary.config.js";
+
+// Helper to fetch quests and attach to a hero document
+const populateQuests = async (heroDoc) => {
+  const quests = await Quest.find({ hero: heroDoc._id }).lean();
+  return { ...heroDoc.toObject(), quests };
+};
 
 // Get all heroes for the current user
 export const getAllHeroes = async (req, res, next) => {
-  const heroes = await Hero.find({ user: req.user._id });
+  const heroesDocs = await Hero.find({ user: req.user._id });
+  const heroes = await Promise.all(heroesDocs.map(populateQuests));
 
   return res.status(200).json({
     success: true,
@@ -17,8 +25,10 @@ export const getAllHeroes = async (req, res, next) => {
 export const getHeroById = async (req, res, next) => {
   const { id } = req.params;
 
-  const hero = await Hero.findOne({ _id: id, user: req.user._id });
-  if (!hero) return next(new Error("Hero not found!", { cause: 404 }));
+  const heroDoc = await Hero.findOne({ _id: id, user: req.user._id });
+  if (!heroDoc) return next(new Error("Hero not found!", { cause: 404 }));
+
+  const hero = await populateQuests(heroDoc);
 
   return res.status(200).json({
     success: true,
@@ -53,7 +63,8 @@ export const createHero = async (req, res, next) => {
     return next(new Error("Avatar is required"), { cause: 400 });
   }
 
-  const hero = await Hero.create(payload);
+  const heroDoc = await Hero.create(payload);
+  const hero = { ...heroDoc.toObject(), quests: [] }; // Fresh hero has no quests
 
   return res.status(201).json({
     success: true,
@@ -78,14 +89,16 @@ export const updateHero = async (req, res, next) => {
     updates.completedQuests = completed_quests;
   }
 
-  const hero = await Hero.findOneAndUpdate(
+  const heroDoc = await Hero.findOneAndUpdate(
     { _id: heroId, user: req.user._id },
     { $set: updates },
     { new: true }, // Return the updated document
   );
 
-  if (!hero)
+  if (!heroDoc)
     return next(new Error("Hero not found or unauthorized", { cause: 404 }));
+
+  const hero = await populateQuests(heroDoc);
 
   return res.status(200).json({
     success: true,
@@ -103,6 +116,9 @@ export const deleteHero = async (req, res, next) => {
   if (!hero)
     return next(new Error("Hero not found or unauthorized", { cause: 404 }));
 
+  // Also delete all quests associated with this hero to clean up
+  await Quest.deleteMany({ hero: hero._id });
+
   return res.status(200).json({
     success: true,
     message: "Hero deleted successfully",
@@ -114,8 +130,10 @@ export const selectHero = async (req, res, next) => {
   const { id } = req.params;
 
   // Verify hero exists and belongs to user
-  const hero = await Hero.findOne({ _id: id, user: req.user._id });
-  if (!hero) return next(new Error("Hero not found!", { cause: 404 }));
+  const heroDoc = await Hero.findOne({ _id: id, user: req.user._id });
+  if (!heroDoc) return next(new Error("Hero not found!", { cause: 404 }));
+
+  const hero = await populateQuests(heroDoc);
 
   // We could implement an activeHero tracking on the User model
   // Or simply rely on the frontend to keep track, but returning success:
