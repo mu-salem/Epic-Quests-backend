@@ -15,7 +15,16 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   let Token = authorization.replace(/^Bearer\s+/i, "").trim();
   Token = Token.replace(/^"+|"+$/g, "");
 
-  const { id } = verifyToken({ token: Token });
+  let decoded;
+  try {
+    decoded = verifyToken({ token: Token });
+  } catch (error) {
+    return next(new Error(error.message || "Invalid or expired token!"), {
+      cause: 401,
+    });
+  }
+
+  const { id } = decoded;
 
   const user = await User.findById(id).select("-password").lean();
   if (!user) return next(new Error("User not found!"), { cause: 404 });
