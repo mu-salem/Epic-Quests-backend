@@ -157,6 +157,7 @@ export const resetPassword = async (req, res, next) => {
   const hashedPassword = hash({ plainText: newPassword });
   user.password = hashedPassword;
   user.forgotPasswordCode = undefined; // Clear the code after use
+  user.isLoggedIn = false;
   await user.save();
 
   return res.status(200).json({

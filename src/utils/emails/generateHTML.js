@@ -5,13 +5,13 @@ export const verifyEmailTemplate = (otp, email) => `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Epic Quests - Verify Your Account</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: #2A2733;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
       color: #F5EFE6;
       display: flex;
       justify-content: center;
@@ -35,10 +35,10 @@ export const verifyEmailTemplate = (otp, email) => `
     .header h1 {
       margin: 0;
       color: #E7C9A5;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 20px;
+      font-size: 24px;
       text-shadow: 2px 2px 0px #2B183D;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      line-height: 1.4;
     }
     .content {
       padding: 40px 30px;
@@ -46,32 +46,16 @@ export const verifyEmailTemplate = (otp, email) => `
     }
     .content h2 {
       color: #F5EFE6;
-      font-size: 28px;
+      font-size: 18px;
       margin-top: 0;
-      margin-bottom: 20px;
-      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
     .content p {
       color: #D6CFC5;
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 11px;
+      line-height: 2.2;
       margin-bottom: 30px;
-    }
-    .otp-container {
-      background-color: #2A2733;
-      border: 2px dashed #E7C9A5;
-      border-radius: 12px;
-      padding: 20px;
-      display: inline-block;
-      margin-bottom: 30px;
-    }
-    .otp-code {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 32px;
-      color: #E7C9A5;
-      letter-spacing: 10px;
-      margin: 0;
-      text-shadow: 0 0 10px rgba(231, 201, 165, 0.5);
     }
     .footer {
       background-color: #2B183D;
@@ -81,40 +65,40 @@ export const verifyEmailTemplate = (otp, email) => `
     }
     .footer p {
       color: #9F78B8;
-      font-size: 12px;
+      font-size: 10px;
       margin: 0;
+      line-height: 1.8;
     }
     .highlight {
       color: #E7C9A5;
-      font-weight: 600;
     }
   </style>
 </head>
-<body>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #2A2733;">
+<body style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; background-color: #2A2733;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #2A2733; font-family: 'Press Start 2P', 'Courier New', Courier, monospace;">
     <tr>
-      <td align="center" style="padding: 40px 20px;">
+      <td align="center" style="padding: 40px 20px; font-family: 'Press Start 2P', 'Courier New', Courier, monospace;">
         <div class="container">
           <!-- Header -->
           <div class="header">
-            <h1>EPIC QUESTS</h1>
+            <h1 style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; margin: 0; color: #E7C9A5; font-size: 24px; text-shadow: 2px 2px 0px #2B183D; letter-spacing: 2px;">EPIC QUESTS</h1>
           </div>
           
           <!-- Content -->
           <div class="content">
-            <h2>A New Hero Rises!</h2>
-            <p>Greetings, adventurer <span class="highlight">${email}</span>.<br>Welcome to the realm of Epic Quests. To begin your journey and secure your hero's data, you must unlock this portal using the magic code below.</p>
+            <h2 style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #F5EFE6; font-size: 18px; margin-top: 0; margin-bottom: 24px; line-height: 1.6;">A New Hero Rises!</h2>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #D6CFC5; font-size: 11px; line-height: 2.2; margin-bottom: 30px;">Greetings, adventurer <span class="highlight" style="color: #E7C9A5;">${email}</span>.<br><br>Welcome to the realm of Epic Quests. To begin your journey and secure your hero's data, you must unlock this portal using the magic code below.</p>
             
-            <div class="otp-container">
-              <p class="otp-code" style="margin-left: 10px;">${otp}</p>
+            <div style="background-color: #2A2733; border: 4px dashed #E7C9A5; border-radius: 12px; padding: 25px 20px; display: inline-block; margin-bottom: 30px;">
+              <p style="margin-top: 0; margin-bottom: 0; margin-left: 16px; font-family: 'Press Start 2P', 'Courier New', Courier, monospace; font-size: 40px; color: #E7C9A5; letter-spacing: 16px; font-weight: bold; text-align: center;">${otp}</p>
             </div>
             
-            <p>Enter this 6-digit code in the app to forge your destiny. This code will expire soon!<br>If you did not initiate this quest, ignore this scroll.</p>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #D6CFC5; font-size: 11px; line-height: 2.2; margin-bottom: 30px;">Enter this 6-digit code in the app to forge your destiny.<br>This code will expire soon!<br><br>If you did not initiate this quest, ignore this scroll.</p>
           </div>
           
           <!-- Footer -->
           <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Epic Quests. May your streaks be long and your XP plentiful.</p>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #9F78B8; font-size: 10px; margin: 0; line-height: 1.8;">&copy; ${new Date().getFullYear()} Epic Quests.<br>May your streaks be long and your XP plentiful.</p>
           </div>
         </div>
       </td>
@@ -131,13 +115,13 @@ export const resetPasswordTemplate = (code, email) => `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Epic Quests - Reset Your Password</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: #2A2733;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
       color: #F5EFE6;
       display: flex;
       justify-content: center;
@@ -161,10 +145,10 @@ export const resetPasswordTemplate = (code, email) => `
     .header h1 {
       margin: 0;
       color: #E7C9A5;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 20px;
+      font-size: 24px;
       text-shadow: 2px 2px 0px #2B183D;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      line-height: 1.4;
     }
     .content {
       padding: 40px 30px;
@@ -172,32 +156,16 @@ export const resetPasswordTemplate = (code, email) => `
     }
     .content h2 {
       color: #F5EFE6;
-      font-size: 28px;
+      font-size: 18px;
       margin-top: 0;
-      margin-bottom: 20px;
-      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
     .content p {
       color: #D6CFC5;
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 11px;
+      line-height: 2.2;
       margin-bottom: 30px;
-    }
-    .otp-container {
-      background-color: #2A2733;
-      border: 2px dashed #E7C9A5;
-      border-radius: 12px;
-      padding: 20px;
-      display: inline-block;
-      margin-bottom: 30px;
-    }
-    .otp-code {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 32px;
-      color: #E7C9A5;
-      letter-spacing: 10px;
-      margin: 0;
-      text-shadow: 0 0 10px rgba(231, 201, 165, 0.5);
     }
     .footer {
       background-color: #2B183D;
@@ -207,40 +175,40 @@ export const resetPasswordTemplate = (code, email) => `
     }
     .footer p {
       color: #9F78B8;
-      font-size: 12px;
+      font-size: 10px;
       margin: 0;
+      line-height: 1.8;
     }
     .highlight {
       color: #E7C9A5;
-      font-weight: 600;
     }
   </style>
 </head>
-<body>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #2A2733;">
+<body style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; background-color: #2A2733;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #2A2733; font-family: 'Press Start 2P', 'Courier New', Courier, monospace;">
     <tr>
-      <td align="center" style="padding: 40px 20px;">
+      <td align="center" style="padding: 40px 20px; font-family: 'Press Start 2P', 'Courier New', Courier, monospace;">
         <div class="container">
           <!-- Header -->
           <div class="header">
-            <h1>EPIC QUESTS</h1>
+            <h1 style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; margin: 0; color: #E7C9A5; font-size: 24px; text-shadow: 2px 2px 0px #2B183D; letter-spacing: 2px;">EPIC QUESTS</h1>
           </div>
           
           <!-- Content -->
           <div class="content">
-            <h2>Reset Your Password</h2>
-            <p>Greetings, adventurer <span class="highlight">${email}</span>.<br>We received a request to reset the password for your Epic Quests account. To proceed, please use the magic code below.</p>
+            <h2 style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #F5EFE6; font-size: 18px; margin-top: 0; margin-bottom: 24px; line-height: 1.6;">Reset Your Password</h2>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #D6CFC5; font-size: 11px; line-height: 2.2; margin-bottom: 30px;">Greetings, adventurer <span class="highlight" style="color: #E7C9A5;">${email}</span>.<br><br>We received a request to reset the password for your Epic Quests account. To proceed, please use the magic code below.</p>
             
-            <div class="otp-container">
-              <p class="otp-code" style="margin-left: 10px;">${code}</p>
+            <div style="background-color: #2A2733; border: 4px dashed #E7C9A5; border-radius: 12px; padding: 25px 20px; display: inline-block; margin-bottom: 30px;">
+              <p style="margin-top: 0; margin-bottom: 0; margin-left: 16px; font-family: 'Press Start 2P', 'Courier New', Courier, monospace; font-size: 40px; color: #E7C9A5; letter-spacing: 16px; font-weight: bold; text-align: center;">${code}</p>
             </div>
             
-            <p>Enter this 6-digit code in the app to verify your identity and set a new password.<br>If you did not initiate this request, please ignore this scroll.</p>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #D6CFC5; font-size: 11px; line-height: 2.2; margin-bottom: 30px;">Enter this 6-digit code in the app to verify your identity and set a new password.<br><br>If you did not initiate this request, please ignore this scroll.</p>
           </div>
           
           <!-- Footer -->
           <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Epic Quests. May your password be strong and your quests epic.</p>
+            <p style="font-family: 'Press Start 2P', 'Courier New', Courier, monospace; color: #9F78B8; font-size: 10px; margin: 0; line-height: 1.8;">&copy; ${new Date().getFullYear()} Epic Quests.<br>May your password be strong and your quests epic.</p>
           </div>
         </div>
       </td>

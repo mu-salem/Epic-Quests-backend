@@ -1,0 +1,799 @@
+{
+  "info": {
+    "name": "Epic Quests API",
+    "description": "API Documentation and test endpoints for the Epic Quests backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Epic Hero\",\n  \"email\": \"hero@epicquests.com\",\n  \"password\": \"heroSecure123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hero@epicquests.com\",\n  \"password\": \"heroSecure123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hero@epicquests.com\",\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify-email",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "verify-email"]
+            }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hero@epicquests.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "forgot-password"]
+            }
+          }
+        },
+        {
+          "name": "Verify Reset Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hero@epicquests.com\",\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify-reset-code",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "verify-reset-code"]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hero@epicquests.com\",\n  \"newPassword\": \"newSecure123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "reset-password"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"your_refresh_token_here\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "refresh-token"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Upgraded Hero\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"heroSecure123\",\n  \"newPassword\": \"heroSuperSecure456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/update-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "update-password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Heroes",
+      "item": [
+        {
+          "name": "Get All Heroes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/heroes",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes"]
+            }
+          }
+        },
+        {
+          "name": "Create Hero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Arthur\",\n  \"class\": \"Warrior\",\n  \"avatar\": \"avatar_1.png\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/heroes",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Hero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/heroes/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_hero_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Hero Stats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"xp\": 500,\n  \"level\": 2,\n  \"streak\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/heroes/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_hero_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Select Hero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/heroes/:id/select",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes", ":id", "select"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_hero_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Hero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/heroes/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["heroes", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_hero_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quests",
+      "item": [
+        {
+          "name": "Get Quests",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/quests?status=active",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "active",
+                  "description": "Filter by status (active, completed)"
+                },
+                {
+                  "key": "hero_id",
+                  "value": "",
+                  "description": "Filter by hero ID",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hero_id\": \"your_hero_id_here\",\n  \"title\": \"Slay the Dragon\",\n  \"description\": \"Defeat the red dragon located in the fiery mountains.\",\n  \"xpReward\": 150,\n  \"priority\": \"high\",\n  \"dueDate\": \"2025-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quests",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Slay the Great Red Dragon\",\n  \"xpReward\": 200\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complete Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/quests/:id/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests", ":id", "complete"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Uncomplete Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/quests/:id/uncomplete",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests", ":id", "uncomplete"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_quest_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recurring Quests",
+      "item": [
+        {
+          "name": "Get Recurring Quests",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/recurring-quests",
+              "host": ["{{baseUrl}}"],
+              "path": ["recurring-quests"]
+            }
+          }
+        },
+        {
+          "name": "Create Recurring Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hero_id\": \"your_hero_id_here\",\n  \"title\": \"Daily Workout\",\n  \"description\": \"Do 50 pushups every day\",\n  \"recurrence\": \"daily\",\n  \"xpReward\": 50\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recurring-quests",
+              "host": ["{{baseUrl}}"],
+              "path": ["recurring-quests"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Recurring Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/recurring-quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["recurring-quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_recurring_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Recurring Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Daily Workout - Level 2\",\n  \"xpReward\": 75\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recurring-quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["recurring-quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_recurring_quest_id_here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Recurring Quest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/recurring-quests/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["recurring-quests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "your_recurring_quest_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "paste_your_access_token_here",
+      "type": "string"
+    }
+  ]
+}
